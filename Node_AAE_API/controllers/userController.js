@@ -84,8 +84,31 @@ function login(req, res) {
     });
 }
 
+function postsByUser(req, res) {
+    const id = req.params.id;
+    User.findByPk(id, { include: ["posts"]})
+     .then(data => {
+         if(data){
+             res.send(data.posts);
+         }else{
+             res.status(400). send({
+                 message: `No se ha encontrado el post con clave ${id}`
+             })
+         }
+     })
+    .catch(err => {
+        res.status(500).send({
+            message:
+              err.message || "Ha ocurrido un error al encontrar el post" + id
+        })
+    })
+
+}
+
 
 module.exports = {
     signUp: signUp,
-    login: login
+    login: login,
+    postsByUser: postsByUser 
+    
 } 

@@ -16,5 +16,12 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = require('./user.js')(sequelize, Sequelize);
+db.post= require('./posts.js')(sequelize, Sequelize);
+
+//foraneas entre tablas
+db.user.hasMany(db.post,{as:'posts'});
+db.post.belongsTo(db.user, { foreignKey: 'userId',as: 'user' });
+
+
 
 module.exports = db;
