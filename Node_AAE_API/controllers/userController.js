@@ -67,6 +67,7 @@ function login(req, res) {
                             message: "Autenticación Exitosa",
                             userId: user.id,
                             nombres: user.nombres,
+                            apellidos: user.apellidos,
                             token: token
                         });
                     });
