@@ -137,3 +137,34 @@ body {
     border-color: #FFFFFF;
     border-width: 2px;
 }
+
+.card-post-all {
+    border-color: #29067A;
+}
+
+.card-post-head {
+    background-color: #4F14A0;
+    border-radius: 10px;
+    color: #FFFFFF;
+    font-size: 13px
+}
+
+#card-post-body {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+#icon-high {
+    font-size: 17px
+}
+
+#title-high {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#content-high {
+    font-size: 14px
+}
+
+

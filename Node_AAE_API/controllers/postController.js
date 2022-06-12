@@ -1,5 +1,6 @@
 const db=require('../models');
 const Post=db.post;
+const User=db.user;
 
 const bcryptjs=require('bcryptjs'); 
 const jwt=require('jsonwebtoken');
@@ -14,12 +15,17 @@ function createPost(req,res){
         return;
     }
     //Creamos el post
-    const post = {
-        userId: req.body.userId,
-        titulo:req.body.titulo,
-        contenido:req.body.contenido,
-    };
+    User.findOne({where:{id:req.body.userId}}).then(result=>{
+        const post = {
+            userId: req.body.userId,
+            nombres:result.nombres,
+            apellidos:result.apellidos,
+            titulo:req.body.titulo,
+            contenido:req.body.contenido,
+        };
+        console.log(post);
 
+        
     //guardamos el post en la base de datos
     Post.create(post).then(data=>{
         res.send(data);
@@ -30,6 +36,16 @@ function createPost(req,res){
              err.message || "Error al crear el post"
         });
     }); //end create
+    })
+    .catch(err=>{
+        res.status(500).send({
+            message:
+             err.message || "Error al crear el post"
+        });
+    }); //end findOne
+    
+
+
 };
 
 
@@ -41,7 +57,7 @@ function findAllPosts(req,res){
 
     Post.findAll(/*{where:condition}*/)
     .then(data=>{
-        res.send(data);
+         res.send(data);
     })
     .catch(err=>{
         res.status(500).send({

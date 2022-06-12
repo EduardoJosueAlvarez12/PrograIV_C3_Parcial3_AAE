@@ -1,5 +1,15 @@
 module.exports=(sequelize, Sequelize)=>{
     const Post=sequelize.define("post",{
+
+        nombres:{
+            type:Sequelize.STRING,
+            allowNull:false
+        },
+        apellidos:{
+            type:Sequelize.STRING,
+            allowNull:false
+        },
+
         titulo: {
             type: Sequelize.STRING,
             allowNull: false,

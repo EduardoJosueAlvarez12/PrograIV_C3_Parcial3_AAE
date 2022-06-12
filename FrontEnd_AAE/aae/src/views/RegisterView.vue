@@ -9,8 +9,6 @@ import RegisterComponent from '../components/RegisterComponent.vue'
 
 export default {
     name: 'RegisterView',
-    components: {
-        RegisterComponent
-    }
+    components: { RegisterComponent }
 }
 </script>
