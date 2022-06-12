@@ -54,8 +54,7 @@
         this.apellidos = localStorage.getItem('apellidos');
         if (localStorage.getItem('token') !== null) {
           this.login = true;
-          console.log(this.login);
-          console.log(localStorage.getItem('token'));
+          
           return this.login;
         }
       },

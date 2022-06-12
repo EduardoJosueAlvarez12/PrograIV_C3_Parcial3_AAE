@@ -167,4 +167,105 @@ body {
     font-size: 14px
 }
 
+/* css para el modulo del feed */
+.btn-post-form-div {
+    float: right;
+    padding-right: 3%;
+    padding-top: 2%;
+}
+.btn-post-form {
+    width: 120px;
+    height: 40px;
+    background-color: #4a0288;
+    border-color: #4a0288;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size:16px;
+}
 
+.btn-post-form:hover {
+    color: #b4b4b4;
+}
+
+.btn-cancel-post-div {
+    float: right;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.btn-cancel-post {
+    font-size: 16px;
+}
+
+.btn-post-div {
+    float: right;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.btn-post {
+    font-size: 16px;
+    background-color: #4a0288;
+    border-color: #4a0288;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.btn-post:hover {
+    color: #b4b4b4;
+}
+
+.customized-form-input{
+    font-size:16px;
+}
+
+#feed-container{
+    overflow: hidden;
+    display: table;
+}
+
+#post-form-container{
+    padding-top: 2%;
+    padding-left: 25%;
+    padding-right: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+#post-form-background{
+    margin: auto;
+    width: 100%;
+    background-color: #d3a7f9;
+    border-radius: 5px;
+    border-color:#121212;
+    border: 10px;
+}
+
+#post-form{
+    margin: auto;
+    padding: 20px;
+    width: 100%;
+}
+
+#post-control-form{
+    padding: 10px;
+    font-size: 16px;
+}
+
+#login-alert-post-form {
+    color: #c33939;
+    font-size:16px;
+    font-weight: bold;
+}
+
+#login-alert-success-post-form {
+    color: #2b8340;
+    font-size:16px;
+    font-weight: bold;
+}
+
+#padding-form {
+    padding: 10px
+}

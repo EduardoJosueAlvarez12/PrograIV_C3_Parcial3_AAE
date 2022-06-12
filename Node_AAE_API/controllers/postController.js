@@ -26,26 +26,19 @@ function createPost(req,res){
         console.log(post);
 
         
-    //guardamos el post en la base de datos
-    Post.create(post).then(data=>{
-        res.send(data);
-    })
-    .catch(err=>{
-        res.status(500).send({
-            message:
-             err.message || "Error al crear el post"
+        //guardamos el post en la base de datos
+        Post.create(post).then(result=>{
+            res.status(201).json({
+                message: "Publicado exitosamente"
+            });
+        })
+        .catch(error=>{
+            res.status(500).json({
+                message: error.errors.map(e => e.message)
+            });
         });
-    }); //end create
-    })
-    .catch(err=>{
-        res.status(500).send({
-            message:
-             err.message || "Error al crear el post"
-        });
-    }); //end findOne
+    });
     
-
-
 };
 
 
@@ -59,10 +52,9 @@ function findAllPosts(req,res){
     .then(data=>{
          res.send(data);
     })
-    .catch(err=>{
-        res.status(500).send({
-            message:
-             err.message || "Error al recuperar los posts"
+    .catch(error=>{
+        res.status(500).json({
+            message: error.errors.map(e => e.message)
         });
     });
 
@@ -110,9 +102,9 @@ function updatePost(req,res){
         }
         
     })
-    .catch(err=>{
-        res.status(500).send({
-            message: "Error al actualizar el post con id: "+id
+    .catch(error=>{
+        res.status(500).json({
+            message: error.errors.map(e => e.message)
         });
     });
 };
@@ -134,9 +126,9 @@ function deletePost(req,res){
             });
         }
     })
-    .catch(err=>{
-        res.status(500).send({
-            message: "Error al eliminar el post con id: "+id
+    .catch(error=>{
+        res.status(500).json({
+            message: error.errors.map(e => e.message)
         });
     });
 };
