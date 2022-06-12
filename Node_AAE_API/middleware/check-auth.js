@@ -8,7 +8,7 @@ function checkAuth(req, res, next) {
         next();
     } catch (e) {
         return res.status(401).json({
-            'message': "El token es inválido o ha expirado",
+            'message': "El token es inválido o ha expirado, por favor inicie sesión",
             'error': e
         });
     }

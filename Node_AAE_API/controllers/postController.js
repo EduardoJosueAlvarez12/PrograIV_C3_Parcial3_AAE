@@ -23,7 +23,6 @@ function createPost(req,res){
             titulo:req.body.titulo,
             contenido:req.body.contenido,
         };
-        console.log(post);
 
         
         //guardamos el post en la base de datos
@@ -48,7 +47,7 @@ function findAllPosts(req,res){
     /*const titulo=req.query.titulo;
     var condition=titulo?{titulo:{[Op.like]:`%${titulo}%`}}:null;*/
 
-    Post.findAll(/*{where:condition}*/)
+    Post.findAll({ order: [['updatedAt', 'DESC']]})
     .then(data=>{
          res.send(data);
     })
