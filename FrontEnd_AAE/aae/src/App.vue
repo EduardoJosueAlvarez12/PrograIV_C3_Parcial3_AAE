@@ -10,14 +10,14 @@
           <b-nav-item class="margin-left" to="/aae/feed">Inicio</b-nav-item>
 
           <b-nav-item class="margin-left" v-if="checkLogin()" to="/aae/mis-posts">Mis Posts</b-nav-item>
+
+          <b-nav-item size="sm" class="margin-left ml-auto" to="/aae/login" v-if="!checkLogin()">Inicio de Sesión</b-nav-item>
+
+          <b-nav-item size="sm" class="margin-left ml-auto" type="submit" to="/aae/registro" v-if="!checkLogin()">Registro</b-nav-item>
+
         </b-navbar-nav>
 
-        <!-- Botón de login y alinear a la izquierda -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-form size="sm" class="mr-sm-2 ml-auto" v-if="!checkLogin()">
-            <b-button style="color: #FFFFFF; background-color: #4F14A0; border-color: #4F14A0" size="sm" class="margin-left ml-auto" type="submit" to="/aae/login">Login</b-button>
-          </b-nav-form>
-
           <b-nav-item-dropdown class="margin-left" v-if="checkLogin()" right>
             <!-- Dropdown -->
             <template #button-content>

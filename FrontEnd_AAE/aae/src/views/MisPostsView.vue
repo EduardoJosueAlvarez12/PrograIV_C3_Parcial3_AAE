@@ -1,22 +1,16 @@
 <template>
-
   <div>
-    <center>
-        <h1>Aquí estarán todos tus Posts {{ nombres }} {{ apellidos }}</h1>
-    </center>
+    <mis-posts-component />
   </div>
-
 </template>
 
 <script>
+import MisPostsComponent from "../components/MisPostsComponent.vue";
 
 export default {
   name: "MisPostsView",
-  data: function () {
-    return {
-      nombres: localStorage.getItem('nombres'),
-      apellidos: localStorage.getItem('apellidos'),
-    };
+  components: {
+    MisPostsComponent,
   },
 };
 </script>

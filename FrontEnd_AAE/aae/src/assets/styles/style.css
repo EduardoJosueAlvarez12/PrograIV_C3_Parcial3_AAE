@@ -32,11 +32,12 @@ body {
 }
 
 #login-jumbotron {
+    overflow: hidden;
+    display: table;
     align-items: center;
     background-color: #4F14A0;
     border-radius: 15px;
     width: 55%;
-    margin: auto;
     position: absolute;
     top: 20%;
     bottom: 20%;
@@ -45,12 +46,16 @@ body {
 }
 
 #register-jumbotron {
+    overflow: hidden;
+    display: table;
+    align-items: center;
     background-color: #4F14A0;
     border-radius: 15px;
     width: 60%;
-    position: absolute; /* Lo pone en el centro*/
+    position: absolute;
+    /* Lo pone en el centro*/
     top: 20%;
-    bottom: 5%;
+    bottom: 10%;
     left: 20%;
     right: 20%;
 }
@@ -60,16 +65,19 @@ body {
 }
 
 #register-title {
-    padding-top: 50%;
-    padding-left: 50px;
+    float: center;
+    padding-top: 30%;
+    padding-left: 70px;
     padding-right: 50%;
     width: 120%;
+    text-align: left;
 }
 
 #register-body {
-    padding: 20px;
-    padding-bottom: 0%;
-    width: 50%;
+    padding-top: 30%;
+    padding: 110px;
+    padding-bottom: 10%;
+    width: 550px;
 }
 
 #login-form {
@@ -110,8 +118,21 @@ body {
 }
 
 #login-alert {
-    border-radius: 40px;
+    border-radius: 5px;
     background-color: #9F0808;
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+    border-width: 2px;
+}
+
+#label-register {
+
+    color: #FFFFFF
+}
+
+#login-alert-success {
+    border-radius: 5px;
+    background-color: #2b8340;
     color: #FFFFFF;
     border-color: #FFFFFF;
     border-width: 2px;

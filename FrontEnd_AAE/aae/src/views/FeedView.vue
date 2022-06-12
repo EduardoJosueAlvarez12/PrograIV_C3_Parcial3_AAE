@@ -1,20 +1,16 @@
 <template>
-
   <div>
-    <center>
-        <h1>Bienvenido a nuestra página</h1>
-    </center>
+    <feed-component />
   </div>
-
 </template>
 
 <script>
+import FeedComponent from "../components/FeedComponent.vue";
 
 export default {
-  name: "FeedView"
+  name: "FeedView",
+  components: {
+    FeedComponent,
+  },
 };
 </script>
-
-// Importamos el archivo style.css 
-
-<style scoped src="../assets/styles/style.css"></style>
