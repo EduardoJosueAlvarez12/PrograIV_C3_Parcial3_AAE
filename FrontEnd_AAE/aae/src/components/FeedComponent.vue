@@ -1,15 +1,6 @@
 <template>
   <div
-    id="root"
-    style="
-      background: linear-gradient(
-          0deg,
-          rgba(255, 255, 255, 0.9),
-          rgba(255, 255, 255, 0.9)
-        ),
-        url('https://thumbs.dreamstime.com/b/modelo-m%C3%A9dico-del-garabato-incons%C3%BAtil-45520678.jpg');
-    "
-  >
+    id="root" style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://thumbs.dreamstime.com/b/modelo-m%C3%A9dico-del-garabato-incons%C3%BAtil-45520678.jpg');">
     <div class="btn-post-form-div">
       <button
         class="btn btn-post-form"
