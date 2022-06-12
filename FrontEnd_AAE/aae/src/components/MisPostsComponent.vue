@@ -41,6 +41,7 @@
                   <b-icon id="icon-high" icon="person-fill"></b-icon> By:
                   {{ item.nombres }} {{ item.apellidos }}
                 </div>
+                
               </div>
 
               <div class="card-body card-post-body">
@@ -52,6 +53,15 @@
                   <p class="card-text">
                     {{ item.contenido }}
                   </p>
+                </div>
+                <br>
+                <div id="boton-eliminar">
+                    <b-button variant="danger" v-on:click="deletePost(item.id)">Eliminar</b-button>
+                </div>
+                <div>
+                  <span id="login-alert-post-form" v-if="error">
+                    {{ error_msg }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -77,6 +87,7 @@ export default {
       error: true,
       error_msg: "",
       usersPosts: {
+        id: "",
         userId: "",
         nombres: "",
         contenido: "",
@@ -112,7 +123,20 @@ export default {
           
           return this.login;
         }
-      },
+    },
+    deletePost(id) {
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+      axios.delete("http://localhost:3001/api/posts/" + id, config).then(() => {
+        this.$router.go(0);
+      })
+      .catch((error) => {
+          console.log(error.response.data.message);
+        });
+      
+    },
+
   }
 };
 </script>

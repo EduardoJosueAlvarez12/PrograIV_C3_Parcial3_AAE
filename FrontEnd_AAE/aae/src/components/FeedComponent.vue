@@ -116,7 +116,6 @@ export default {
   },
   methods: {
     refrescarPagina() {
-      console.log('soy un botón')
       this.$router.go(0)
     },
     showForm() {
