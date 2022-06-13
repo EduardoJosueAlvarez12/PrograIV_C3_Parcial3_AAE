@@ -179,6 +179,14 @@ body {
     padding-top: 2%;
     padding-bottom: 2%;
 }
+
+.search-post-form-div {
+    float: left;
+    padding-left: 3%;
+    padding-top: 2%;
+    padding-bottom: 1%;
+}
+
 .btn-post-form {
     width: 120px;
     height: 40px;
@@ -289,6 +297,7 @@ body {
 #all-posts{
     padding-left: 10%;
     padding-right: 10%;
+    width: 80%;
 }
 
 #container-mis-datos {
@@ -369,3 +378,15 @@ body {
     display:flex;
 }
 
+#all-barra-busqueda {
+    align-items: center;
+}
+
+#btn-cancelar-busqueda{
+    float: left;
+    padding-left: 3%;
+}
+
+.btn-link{
+    color: #b62738;
+}

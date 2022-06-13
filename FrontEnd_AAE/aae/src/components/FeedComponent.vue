@@ -11,6 +11,23 @@
       </button>
     </div>
 
+    <!-- Barra de busqueda -->
+      <b-form-group>
+        <div class="search-post-form-div" v-if="!showPostForm">
+          <b-form class="flex-container-space-between" v-on:submit.prevent="buscar()">
+            <b-form-input size="sm" placeholder="Ejemplo: Diptóngo" v-model="tituloFiltro"></b-form-input>
+            <br>
+            <b-button size="sm" type="submit">Buscar</b-button>
+          </b-form>
+        </div>
+      </b-form-group>
+
+      <b-form-group>
+        <div id="btn-cancelar-busqueda" v-if="!showPostForm">
+          <button size="sm" class="btn btn-link" v-on:click="volverFeed()">Cancelar busqueda</button>
+        </div>
+      </b-form-group>
+
     <div id="post-form-container" v-if="showPostForm">
       <div id="post-form-background">
         <b-form id="post-form" v-on:submit.prevent="postear()">
@@ -51,15 +68,6 @@
             <span id="login-alert-post-form" v-if="error">
               {{ error_msg }}
             </span>
-          </div>
-
-          <div id="padding-form">
-            <span id="login-alert-success-post-form" v-if="!error">
-              {{ success_msg }}
-            </span>
-            <p class="h5 mb-2" v-if="!error" v-on:click="refrescarPagina()">
-              Refrescar la página <b-icon id="btn-refresh" icon="arrow-clockwise" animation="spin-pulse"></b-icon>
-            </p>
           </div>
         </b-form>
       </div>
@@ -102,10 +110,13 @@ export default {
   components: {},
   data: function () {
     return {
+      tituloFiltro: '',
       showPostForm: false,
       error: true,
       error_msg: "",
       success_msg: "",
+      errorSearch: false,
+      error_msg_search: '',
       usersPosts: {
         userId: "",
         nombres: "",
@@ -115,9 +126,6 @@ export default {
     };
   },
   methods: {
-    refrescarPagina() {
-      this.$router.go(0)
-    },
     showForm() {
       return (this.showPostForm = true);
     },
@@ -140,6 +148,7 @@ export default {
         .then((data) => {
           this.success_msg = data.data.message;
           this.error = false;
+          this.$router.go(0);
         })
         .catch((error) => {
           this.error = true;
@@ -151,12 +160,45 @@ export default {
           }
         });
     },
+    buscar(){
+      localStorage.custom_search=true;
+      localStorage.tituloFiltro=this.tituloFiltro;
+      this.$router.go(0)
+    },
+    volverFeed(){
+      localStorage.custom_search=false;
+      localStorage.tituloFiltro="";
+      this.$router.go(0)
+    },
   },
   created() {
-    axios.get("http://localhost:3001/api/posts").then((response) => {
+    if(localStorage.custom_search==='true'){
+      
+      axios
+        .get("http://localhost:3001/api/posts/ptitulo/" + localStorage.tituloFiltro)
+        .then((response) => {
+          this.usersPosts = response.data;
+          this.errorSearch = false;
+        })
+        .catch((error) => {
+          this.errorSearch = true;
+          this.error_msg_search = error.response.data.message;
+
+        });
+    } else {
+      console.log("Ya entré") 
+      axios.get("http://localhost:3001/api/posts").then((response) => {
       this.usersPosts = response.data;
-    });
+      });
+    }
+    
   },
+  // beforeCreate() {
+  //   console.log("Aquí imprimimos Created " + this.custom_search);
+  //   console.log("Aquí imprimimos Created " + localStorage.custom_search);
+  //   this.custom_search=localStorage.custom_search;
+  //   console.log("Aquí imprimimos Created " + this.custom_search);
+  // }
 };
 </script>
 

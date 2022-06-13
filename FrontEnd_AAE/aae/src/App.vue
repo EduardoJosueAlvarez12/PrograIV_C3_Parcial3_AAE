@@ -23,7 +23,6 @@
             <template #button-content>
               <em>{{ nombres }}</em>
             </template>
-            <b-dropdown-item href="#">Perfil</b-dropdown-item>
             <b-dropdown-item v-on:click="logout()">Cerrar Sesión</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

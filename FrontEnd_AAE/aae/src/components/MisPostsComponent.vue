@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div id="padding-form">
       <span id="login-alert-post-form" v-if="error">
         {{ error_msg }}
@@ -154,6 +153,7 @@ export default {
       userId: localStorage.getItem("userId"),
       login: false,
       errorEdit: true,
+      error: false,
       showPostForm: false,
       error_msg: "",
       usersPosts: {
