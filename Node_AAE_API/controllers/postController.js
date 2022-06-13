@@ -1,143 +1,163 @@
-const db=require('../models');
-const Post=db.post;
-const User=db.user;
+const db = require('../models');
+const Post = db.post;
+const User = db.user;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-const bcryptjs=require('bcryptjs'); 
-const jwt=require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 //creamos y guardamos un nuevo post
-function createPost(req,res){
+function createPost(req, res) {
     //validamos la solicitud
-    if(!req.body.titulo){
+    if (!req.body.titulo) {
         res.status(400).send({
             message: "El titulo es requerido"
         });
         return;
     }
     //Creamos el post
-    User.findOne({where:{id:req.body.userId}}).then(result=>{
+    User.findOne({ where: { id: req.body.userId } }).then(result => {
         const post = {
             userId: req.body.userId,
-            nombres:result.nombres,
-            apellidos:result.apellidos,
-            titulo:req.body.titulo,
-            contenido:req.body.contenido,
+            nombres: result.nombres,
+            apellidos: result.apellidos,
+            titulo: req.body.titulo,
+            contenido: req.body.contenido,
         };
 
-        
+
         //guardamos el post en la base de datos
-        Post.create(post).then(result=>{
+        Post.create(post).then(result => {
             res.status(201).json({
                 message: "Publicado exitosamente"
             });
         })
-        .catch(error=>{
-            res.status(500).json({
-                message: error.errors.map(e => e.message)
+            .catch(error => {
+                res.status(500).json({
+                    message: error.errors.map(e => e.message)
+                });
             });
-        });
     });
-    
+
 };
 
 
 //recuperamos toos los posts de la base de datos
-function findAllPosts(req,res){
+function findAllPosts(req, res) {
 
     /*const titulo=req.query.titulo;
     var condition=titulo?{titulo:{[Op.like]:`%${titulo}%`}}:null;*/
 
-    Post.findAll({ order: [['updatedAt', 'DESC']]})
-    .then(data=>{
-         res.send(data);
-    })
-    .catch(error=>{
-        res.status(500).json({
-            message: error.errors.map(e => e.message)
+    Post.findAll({ order: [['updatedAt', 'DESC']] })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.errors.map(e => e.message)
+            });
         });
-    });
 
 };
 
 
 
 //Encontramos un post por id
-function findOnePost(req,res){
-    const id=req.params.id;
+function findOnePost(req, res) {
+    const id = req.params.id;
     Post.findByPk(id)
-    .then(data=>{
-        if(data){
-            res.send(data);
+        .then(data => {
+            if (data) {
+                res.send(data);
 
-        }else{
-            res.status(404).send({
-                message: "No se encontro el post"
+            } else {
+                res.status(404).send({
+                    message: "No se encontro el post"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error al recuperar el post con id: " + id
             });
-        }
-    })
-    .catch(err=>{
-        res.status(500).send({
-            message: "Error al recuperar el post con id: "+id
         });
-    });
-    
+
 };
 
+//encontrar posts por título
+function findPostByTitle(req, res) {
+    const titulo = req.params.titulo;
+    console.log(titulo);
+    var condicion = titulo ? { titulo: { [Op.like]: `%${titulo}%` } } : null;
+    Post.findAll({ where: condicion })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    "No se encontró un post con ese título"
+            })
+        })
+}
+
+
 //actualizamos un post por id en la solicitud
-function updatePost(req,res){
+function updatePost(req, res) {
     const id = req.params.id;
-    Post.update(req.body,{
-        where:{id:id}
+    Post.update(req.body, {
+        where: { id: id }
     })
-    .then(num=>{
-        if(num==1){
-            res.send({
-                message: "El post se actualizo correctamente"
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "El post se actualizo correctamente"
+                });
+            } else {
+                res.send({
+                    message: "No se encontro el post con id: " + id
+                });
+            }
+
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.errors.map(e => e.message)
             });
-        }else{
-            res.send({
-                message: "No se encontro el post con id: "+id
-            });
-        }
-        
-    })
-    .catch(error=>{
-        res.status(500).json({
-            message: error.errors.map(e => e.message)
         });
-    });
 };
 
 //eliminamos un post por id en la solicitud
-function deletePost(req,res){
+function deletePost(req, res) {
     const id = req.params.id;
     Post.destroy({
-        where:{id:id}
+        where: { id: id }
     })
-    .then(num=>{
-        if(num==1){
-            res.send({
-                message: "El post se elimino correctamente"
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "El post se elimino correctamente"
+                });
+            } else {
+                res.send({
+                    message: "No se encontro el post con id: " + id
+                });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.errors.map(e => e.message)
             });
-        }else{
-            res.send({
-                message: "No se encontro el post con id: "+id
-            });
-        }
-    })
-    .catch(error=>{
-        res.status(500).json({
-            message: error.errors.map(e => e.message)
         });
-    });
 };
 
 
-module.exports={
+module.exports = {
     createPost: createPost,
     findAllPosts: findAllPosts,
-    findOnePost : findOnePost,
+    findPostByTitle: findPostByTitle,
+    findOnePost: findOnePost,
     updatePost: updatePost,
     deletePost: deletePost,
-    
 }

@@ -8,8 +8,10 @@ module.exports = app => {
 
     //recuperar todos los posts
     router.get("/",  Posts.findAllPosts);
-   //recuperar un post por id
+    //recuperar un post por id
     router.get("/:id",checkAuthMiddleware.checkAuth, Posts.findOnePost);
+    //recuperar un post por titulo
+    router.get("/ptitulo/:titulo", Posts.findPostByTitle)
     //actualizar un post por id
     router.put("/:id",checkAuthMiddleware.checkAuth, Posts.updatePost);
     //eliminar un post por id
