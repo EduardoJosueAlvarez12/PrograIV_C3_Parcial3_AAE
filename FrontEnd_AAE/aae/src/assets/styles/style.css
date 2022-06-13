@@ -21,6 +21,11 @@ body {
 
 }
 
+.flex-container-space-between-post {
+    float: right;
+    display:flex;
+}
+
 .flex-container {
     display: flex;
     justify-content: center;
@@ -170,9 +175,9 @@ body {
 /* css para el modulo del feed */
 .btn-post-form-div {
     float: right;
-    padding-right: 3%;
+    padding-right: 2%;
     padding-top: 2%;
-    padding: 25px;
+    padding-bottom: 2%;
 }
 .btn-post-form {
     width: 120px;
@@ -196,6 +201,16 @@ body {
 }
 
 .btn-cancel-post {
+    font-size: 16px;
+}
+
+#btn-edit-post-div {
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.btn-edit-post {
     font-size: 16px;
 }
 
@@ -326,9 +341,31 @@ body {
     align-items: center;
 }
 
-#boton-eliminar {
-    padding-bottom: 1%;
-    padding-left: 90%;
-    padding-right: 10%;
+#btn-delete-post-div {
+    float: right;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+#btn-delete-post {
+    width: 120px;
+    height: 40px;
+    background-color: #880202;
+    border-color: #880202;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+#btn-edit-post {
+    width: 120px;
+    height: 40px;
+    color: #27b6b6;
+    font-size: 16px;
+}
+
+#buttons{
+    display:flex;
 }
 

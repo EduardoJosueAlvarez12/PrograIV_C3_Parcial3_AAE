@@ -32,6 +32,63 @@
         </div>
       </div>
       <div id="container-mis-posts" class="container">
+        <div id="post-form-container" v-if="showPostForm">
+          <div id="post-form-background">
+            <b-form id="post-form" v-on:submit.prevent="editPost()">
+              <b-form-input 
+                v-model="selectedPost.id"
+                hidden
+              ></b-form-input>
+              <b-form-group
+                id="post-control-form"
+                label="Título:"
+                label-for="input-1"
+              >
+                <b-form-input
+                  class="customized-form-input"
+                  id="titulo"
+                  placeholder="Una breve descripción"
+                  v-model="selectedPost.titulo"
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group
+                id="post-control-form"
+                label="Contenido:"
+                label-for="input-2"
+              >
+                <b-form-textarea
+                  class="customized-form-input"
+                  id="contenido"
+                  type="email"
+                  placeholder="El contenido de su post"
+                  v-model="selectedPost.contenido"
+                ></b-form-textarea>
+              </b-form-group>
+              <div class="btn-cancel-post-div">
+                <button class="btn btn-cancel-post" v-on:click="hideForm()">
+                  Cancelar
+                </button>
+              </div>
+              <div class="btn-post-div">
+                <button type="submit" class="btn btn-post">Publicar</button>
+              </div>
+              <div id="padding-form">
+                <span id="login-alert-post-form" v-if="errorEdit">
+                  {{ error_msg }}
+                </span>
+              </div>
+
+              <div id="padding-form">
+                <span id="login-alert-success-post-form" v-if="!errorEdit">
+                  {{ success_msg }}
+                </span>
+                <p class="h5 mb-2" v-if="!errorEdit" v-on:click="refrescarPagina()">
+                  Refrescar la página <b-icon id="btn-refresh" icon="arrow-clockwise" animation="spin-pulse"></b-icon>
+                </p>
+              </div>
+            </b-form>
+          </div>
+        </div>
         <div id="all-posts" class="container">
           <div v-for="item in usersPosts" v-bind:key="item">
             <br />
@@ -55,8 +112,20 @@
                   </p>
                 </div>
                 <br>
-                <div id="boton-eliminar">
-                    <b-button variant="danger" v-on:click="deletePost(item.id)">Eliminar</b-button>
+                
+                <div class="flex-container-space-between-post">
+                  <div id="btn-edit-post-div">
+                    <button
+                      id="btn-edit-post"
+                      class="btn btn-edit-post"
+                      v-if="!showPostForm"
+                      v-on:click="showForm(item.id)">
+                      Editar Post
+                    </button>
+                  </div>
+                  <div id="btn-delete-post-div">
+                      <b-button id="btn-delete-post" v-on:click="deletePost(item.id)">Eliminar</b-button>
+                  </div>
                 </div>
                 <div>
                   <span id="login-alert-post-form" v-if="error">
@@ -84,7 +153,8 @@ export default {
       apellidos: localStorage.getItem("apellidos"),
       userId: localStorage.getItem("userId"),
       login: false,
-      error: true,
+      errorEdit: true,
+      showPostForm: false,
       error_msg: "",
       usersPosts: {
         id: "",
@@ -92,6 +162,12 @@ export default {
         nombres: "",
         contenido: "",
       },
+      selectedPost: {
+        id: "",
+        userId: "",
+        nombres: "",
+        contenido: "",
+      }
     };
   },
   created() {
@@ -134,11 +210,51 @@ export default {
       .catch((error) => {
           console.log(error.response.data.message);
         });
-      
     },
+    editPost() {
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
 
+      let json = {
+        userId: this.selectedPost.userId,
+        titulo: this.selectedPost.titulo,
+        contenido: this.selectedPost.contenido,
+      };
+
+      axios.put("http://localhost:3001/api/posts/" + this.selectedPost.id, json, config).then(() => {
+        this.$router.go(0);
+      })
+      .catch((error) => {
+          this.errorEdit = true;
+          // eslint-disable-next-line no-constant-condition
+          if (typeof error.response.data.message === "string") {
+            this.error_msg = error.response.data.message;
+          } else {
+            this.error_msg = error.response.data.message[0];
+          }
+      });
+    },
+    showForm(id) {
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      };
+
+      axios.get("http://localhost:3001/api/posts/" + id, config).then((response)=> {
+        this.selectedPost = response.data;
+        this.showPostForm = true;
+      })
+    },
+    hideForm() {
+      return (this.showPostForm = false);
+    },
+    refrescarPagina() {
+      this.$router.go(0)
+    }
   }
+  
 };
+
 </script>
 
 // Importamos el archivo style.css 
