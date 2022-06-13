@@ -1,4 +1,5 @@
 <template>
+  <!-- jumbotron que contiene el formulario -->
   <b-jumbotron id="login-jumbotron" class="jumbotron jumbotron-fluid">
     <b-container class="flex-container-space-between">
       <div id="arrow-button" type="button">
@@ -33,7 +34,7 @@
           </p>
         </div>
       </div>
-
+      <!-- Formulario inicio de sesión -->
       <div>
         <div id="login-form" class="container-fluid">
           <form v-on:submit.prevent="login">
@@ -78,6 +79,7 @@
           </form>
         </div>
       </div>
+      <!-- aquí termina el formulario de inicio de sesión -->
     </div>
   </b-jumbotron>
 </template>
@@ -110,9 +112,10 @@ export default {
             localStorage.userId = data.data.userId;
             localStorage.nombres = data.data.nombres;
             localStorage.apellidos = data.data.apellidos;
-
+            //en caso de autenticarse correctamente se carga el feed
             this.$router.push("feed");
           } else {
+            //caso contrario se muestran los mensajes de validación
             this.error = true;
             this.error_msg = data.response.data.message;
           }

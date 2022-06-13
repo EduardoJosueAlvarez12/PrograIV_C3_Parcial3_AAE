@@ -1,12 +1,15 @@
 <template>
   <div>
+    <!-- en caso de que un usuario invitado ingrese forzadamente a la página mis posts -->
+    <!-- se mostrará el siguiente mensaje indicándole que debe iniciar sesión para acceder al contenido -->
     <div id="padding-form">
       <span id="login-alert-post-form" v-if="error">
         {{ error_msg }}
       </span>
     </div>
-
+    <!-- el v-if siguiente verifica que el usuario este autenticado para mostrar el contenido -->
     <div id="padding-form" style="background: linear-gradient(0deg,rgba(255, 255, 255, 0.9),rgba(255, 255, 255, 0.9)),url('https://thumbs.dreamstime.com/b/modelo-m%C3%A9dico-del-garabato-incons%C3%BAtil-45520678.jpg');" v-if="checkLogin()">
+      <!-- se muestran algunos datos del usuario -->
       <div
         id="container-mis-datos"
         class="container flex-container-space-between">
@@ -30,7 +33,9 @@
           </div>
         </div>
       </div>
+      <!-- espacio para los posts del usuario -->
       <div id="container-mis-posts" class="container">
+        <!-- formulario para edición de posts -->
         <div id="post-form-container" v-if="showPostForm">
           <div id="post-form-background">
             <b-form id="post-form" v-on:submit.prevent="editPost()">
@@ -88,6 +93,7 @@
             </b-form>
           </div>
         </div>
+        <!-- se recorren los posts del usuario si los hay-->
         <div id="all-posts" class="container">
           <div v-for="item in usersPosts" v-bind:key="item">
             <br />
@@ -111,7 +117,7 @@
                   </p>
                 </div>
                 <br>
-                
+                <!-- botones de eliminación y formulario de edición de posts -->
                 <div class="flex-container-space-between-post">
                   <div id="btn-edit-post-div">
                     <button
@@ -170,6 +176,7 @@ export default {
       }
     };
   },
+  //se traen los posts del usuario en el hook created
   created() {
     const config = {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

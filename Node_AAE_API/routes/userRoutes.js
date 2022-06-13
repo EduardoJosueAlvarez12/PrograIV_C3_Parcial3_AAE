@@ -4,9 +4,10 @@ module.exports = app => {
     const users = require('../controllers/userController');
     var router = require('express').Router();
 
-    // crear rutas
-    router.post('/sign-up', users.signUp); //registro
-    router.post('/login', users.login); //inicio
+    //registro
+    router.post('/sign-up', users.signUp);
+    //inicio
+    router.post('/login', users.login); 
     //posts por usuario
     router.get('/puser/:id',checkAuthMiddleware.checkAuth, users.postsByUser);
 

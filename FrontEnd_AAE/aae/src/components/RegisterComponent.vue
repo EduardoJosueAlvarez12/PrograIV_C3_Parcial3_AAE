@@ -1,4 +1,5 @@
 <template>
+  <!-- jumbotron que contiene el formulario de registro -->
   <b-jumbotron id="register-jumbotron" class="jumbotron jumbotron-fluid">
     <b-container class="flex-container-space-between">
       <div class="flex-container" style="width: calc(100% - 40px)">
@@ -11,6 +12,7 @@
           </div>
         </div>
         <div>
+          <!-- formulario de registro -->
           <div id="register-body" class="container-fluid">
             <form v-on:submit.prevent="register">
               <div id="register-control">
@@ -61,9 +63,14 @@
                   type="password"
                   class="form-control"
                   name="contrasenia"
+                  aria-describedby="passwordHelpBlock"
                   placeholder="Ejemplo: @!Contraseña123"
                   v-model="contrasenia"
                 />
+                <div id="passwordHelpBlock" class="form-text">
+                  La contraseña debe tener al menos 8 carácteres e incluir al menos una mayúscula,
+                  una minúscula, un número y un carácter especial.
+                </div>
               </div>
               <div id="login-button">
                 <button id="login-button" type="submit" class="btn btn-primary">
@@ -87,6 +94,7 @@
               </center>
             </form>
           </div>
+          <!-- aquí termina el formulario de registro -->
         </div>
       </div>
     </b-container>

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+//esta función protege las rutas con token en las que se use
 function checkAuth(req, res, next) {
     try {
         const token = req.headers.authorization.split(" ")[1];

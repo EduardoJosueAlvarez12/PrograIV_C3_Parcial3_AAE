@@ -5,7 +5,6 @@ module.exports = app => {
 
     //crear un nuevo post
     router.post("/", checkAuthMiddleware.checkAuth, Posts.createPost);
-
     //recuperar todos los posts
     router.get("/",  Posts.findAllPosts);
     //recuperar un post por id

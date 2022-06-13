@@ -1,6 +1,8 @@
 <template>
+  <!-- el siguiente id se encarga de la imagen de fondo -->
   <div
     id="root" style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://thumbs.dreamstime.com/b/modelo-m%C3%A9dico-del-garabato-incons%C3%BAtil-45520678.jpg');">
+    <!-- botón para abrir el formulario de creación de posts -->
     <div class="btn-post-form-div">
       <button
         class="btn btn-post-form"
@@ -11,7 +13,7 @@
       </button>
     </div>
 
-    <!-- Barra de busqueda -->
+    <!-- barra de búsqueda -->
       <b-form-group>
         <div class="search-post-form-div" v-if="!showPostForm">
           <b-form class="flex-container-space-between" v-on:submit.prevent="buscar()">
@@ -22,12 +24,13 @@
         </div>
       </b-form-group>
 
+      <!-- cancela la búsqueda personalizada -->
       <b-form-group>
         <div id="btn-cancelar-busqueda" v-if="!showPostForm">
           <button size="sm" class="btn btn-link" v-on:click="volverFeed()">Cancelar busqueda</button>
         </div>
       </b-form-group>
-
+    <!-- formulario de creación de posts -->
     <div id="post-form-container" v-if="showPostForm">
       <div id="post-form-background">
         <b-form id="post-form" v-on:submit.prevent="postear()">
@@ -64,6 +67,8 @@
           <div class="btn-post-div">
             <button type="submit" class="btn btn-post">Publicar</button>
           </div>
+          <!-- en caso de validaciones o que el usuario no esté autenticado (loggeado) -->
+          <!-- dichos errores se mostrarán aquí -->
           <div id="padding-form">
             <span id="login-alert-post-form" v-if="error">
               {{ error_msg }}
@@ -72,7 +77,7 @@
         </b-form>
       </div>
     </div>
-
+    <!-- aquí se recorren los posts de todos los usuarios en el feed -->
     <div id="all-posts" class="container">
       <div v-for="item in usersPosts" v-bind:key="item">
         <br />
@@ -171,9 +176,10 @@ export default {
       this.$router.go(0)
     },
   },
+  //para recuperar los posts del feed se hace en el hook created
   created() {
-    if(localStorage.custom_search==='true'){
-      
+    //se verifica si es una búsqueda personalizada o si se deben mostrar todos los posts
+    if(localStorage.custom_search==='true'){     
       axios
         .get("http://localhost:3001/api/posts/ptitulo/" + localStorage.tituloFiltro)
         .then((response) => {
@@ -186,19 +192,12 @@ export default {
 
         });
     } else {
-      console.log("Ya entré") 
       axios.get("http://localhost:3001/api/posts").then((response) => {
       this.usersPosts = response.data;
       });
     }
     
   },
-  // beforeCreate() {
-  //   console.log("Aquí imprimimos Created " + this.custom_search);
-  //   console.log("Aquí imprimimos Created " + localStorage.custom_search);
-  //   this.custom_search=localStorage.custom_search;
-  //   console.log("Aquí imprimimos Created " + this.custom_search);
-  // }
 };
 </script>
 
